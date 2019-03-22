@@ -65,6 +65,8 @@ class Upgrader extends Module
 
         $moduleInstalledInformation = $this->informationObj->getInstalledInformation($this->moduleName);
 
+        // Process all directories within the /upgrade/ path.
+        // Entry name should be a version.
         $upgradesPath = $this->getModulePath($this->moduleName) . '/upgrade/';
         $upgrades = $this->dependencyInjector['finder']->directories()->depth('== 0')->in($upgradesPath);
         usort($upgrades, 'version_compare');
