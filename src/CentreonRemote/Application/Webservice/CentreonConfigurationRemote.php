@@ -337,7 +337,7 @@ class CentreonConfigurationRemote extends CentreonWebServiceAbstract
      *
      * @param $serverIP
      */
-    private function addServerToListOfRemotes($serverIP, $centreonPath, $httpMethod, $httpPort, $noCheckCertificate)
+    private function addServerToListOfRemotes($serverIP, $centreonPath, $httpMethod = 'http', $httpPort = null, $noCheckCertificate = 0)
     {
         $dbAdapter = $this->getDi()['centreon.db-manager']->getAdapter('configuration_db');
         $date = date('Y-m-d H:i:s');
@@ -350,7 +350,7 @@ class CentreonConfigurationRemote extends CentreonWebServiceAbstract
             $sql = 'UPDATE `remote_servers` SET `is_connected` = ?, `connected_at` = ?, `centreon_path` = ?, ' .
                 'http_method = ?, http_port = ?, no_check_certificate = ? ' .
                 'WHERE `ip` = ?';
-            $data = ['1', $date, $centreonPath, $httpPort, $noCheckCertificate, $serverIP];
+            $data = ['1', $date, $centreonPath, $httpMethod, $httpPort, $noCheckCertificate, $serverIP];
             $dbAdapter->query($sql, $data);
         } else {
             $data = [
